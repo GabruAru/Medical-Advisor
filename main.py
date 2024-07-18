@@ -38,7 +38,7 @@ def initialize_session_state():
     if "conversation" not in st.session_state:
         # llama = LlamaAPI(st.secrets["LlamaAPI"])
         # model = ChatLlamaAPI(client=llama)
-        chat = ChatGroq(temperature=0.5, groq_api_key=st.secrets["Groq_api"], model_name="mixtral-8x7b-32768")
+        chat = ChatGroq(temperature=0.5, groq_api_key=st.secrets["Groq_api"], model_name="llama3-70b-8192")
 
         embeddings = download_hugging_face_embeddings()
 
@@ -54,8 +54,11 @@ def initialize_session_state():
         docsearch = Pinecone.from_existing_index(index_name, embeddings)
 
         prompt_template = """
-            You are a trained bot to guide people about their medical concerns. You will answer user's query with your knowledge and the context provided. 
+            You are a trained bot to guide people about their medical concerns acting as Doctor. You will answer user's query with your knowledge and the context provided. 
+            
             If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+            Provide very detailed answer as Doctor.
+            
             Use the following pieces of context to answer the users question.
             Context: {context}
             Question: {question}
@@ -104,27 +107,7 @@ initialize_session_state()
 
 st.title("Medical Advisor Chatbot 🇮🇳")
 
-# st.markdown(
-#     """
-#     👋 **Namaste! Welcome to LegalEase Advisor!**
-#     I'm here to assist you with your legal queries within the framework of Indian law. Whether you're navigating through specific legal issues or seeking general advice, I'm here to help.
-    
-#     📚 **How I Can Assist:**
-    
-#     - Answer questions on various aspects of Indian law.
-#     - Guide you through legal processes relevant to India.
-#     - Provide information on your rights and responsibilities as per Indian legal standards.
-    
-#     ⚖️ **Disclaimer:**
-    
-#     While I can provide general information, it's essential to consult with a qualified Indian attorney for advice tailored to your specific situation.
-    
-#     🤖 **Getting Started:**
-    
-#     Feel free to ask any legal question related to Indian law, using keywords like "property rights," "labor laws," or "family law." I'm here to assist you!
-#     Let's get started! How can I assist you today?
-#     """
-# )
+
 
 chat_placeholder = st.container()
 prompt_placeholder = st.form("chat-form")
