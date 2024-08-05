@@ -15,7 +15,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 import time
 import os
-os.environ['PINECONE_API_KEY'] = "fa944c7c-5775-4a96-8704-e04f7a86614e"
+os.environ['PINECONE_API_KEY'] = <PINECONE API>
 pc = Pinecone()
 
 HUGGINGFACEHUB_API_TOKEN = st.secrets['HUGGINGFACEHUB_API_TOKEN']
